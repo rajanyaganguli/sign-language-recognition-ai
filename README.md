@@ -96,15 +96,6 @@ SignLang-AI/
 └── README.md
 
 
----
-
-## ⚙️ Installation
-
-bash
-git clone https://github.com/ashish-4169/SignLang-AI.git
-cd SignLang-AI
-pip install -r requirements.txt
-
 
 ---
 
