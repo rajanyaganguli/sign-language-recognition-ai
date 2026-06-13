@@ -1,135 +1,168 @@
-# 🤟 SignLang AI — Real-time Hand Gesture & ASL Recognition
+# 🤟 SignLang AI: Real-Time Hand Gesture Recognition
 
-[![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)](https://python.org)
-[![MediaPipe](https://img.shields.io/badge/MediaPipe-0.10+-orange.svg)](https://mediapipe.dev)
-[![OpenCV](https://img.shields.io/badge/OpenCV-4.8+-green.svg)](https://opencv.org)
-[![Streamlit](https://img.shields.io/badge/Streamlit-1.32+-red.svg)](https://streamlit.io)
+![Python](https://img.shields.io/badge/Python-3.10-blue)
+![PyTorch](https://img.shields.io/badge/PyTorch-Deep%20Learning-red)
+![MediaPipe](https://img.shields.io/badge/MediaPipe-Hand%20Tracking-green)
+![Streamlit](https://img.shields.io/badge/Streamlit-Web%20App-FF4B4B)
 
-A **real-time hand gesture and American Sign Language (ASL) recognition system** using MediaPipe's 21-point hand landmark tracking and geometric deep learning, running at **30fps on CPU** with no cloud dependency.
-
----
-
-## 🎯 Project Highlights
-
-| Feature | Detail |
-|---|---|
-| **Hand Tracking** | MediaPipe Hands — 21 3D landmarks per hand |
-| **Speed** | 30fps real-time on CPU (no GPU needed) |
-| **Gestures** | 26 ASL letters + 8 common gestures |
-| **Input** | Webcam live feed + image upload + video upload |
-| **Explainability** | Landmark skeleton overlay, confidence scores |
-| **Sentence Builder** | Spell words by holding ASL signs |
+A real-time hand gesture recognition system built using *MediaPipe, PyTorch, OpenCV, and Streamlit*. The application detects hand landmarks from webcam input, extracts geometric features, and predicts gestures using a custom-trained neural network. The entire pipeline runs efficiently on CPU, enabling low-latency inference without requiring cloud services.
 
 ---
 
-## 🏗️ Architecture
+## 🚀 Features
 
-```
-Camera Frame / Uploaded Image
-         ↓
-MediaPipe BlazePalm (hand detection)
-         ↓
-21 Landmark Extraction (x, y, z per joint)
-         ↓
-Feature Engineering:
-  ├── Finger extension states (5 binary values)
-  ├── Joint angles (thumb, index curl etc.)
-  └── Fingertip distances
-         ↓
-Rule-based + GestureNet MLP Classifier
-         ↓
-Label + Confidence + Landmark Overlay
-```
+* 🎥 Real-time gesture recognition using webcam input
+* ✋ Hand landmark detection using MediaPipe
+* 🧠 Custom GestureNet (MLP) classifier built with PyTorch
+* 🌐 Interactive Streamlit web application
+* 🖼️ Supports both live webcam and image-based inference
+* ⚡ Lightweight CPU-based inference for fast predictions
 
 ---
 
-## 🚀 Quick Start
+## 🧠 Project Overview
 
-```bash
-# 1. Clone
-git clone https://github.com/yourusername/signlang-ai.git
-cd signlang-ai
+Traditional image-based gesture recognition often requires large datasets and computationally expensive CNN architectures. This project leverages *MediaPipe's 21-point hand landmark detector* to obtain compact representations of hand poses.
 
-# 2. Install
+The extracted landmark coordinates are normalized and used to train a lightweight *GestureNet Multi-Layer Perceptron (MLP)* capable of recognizing gestures in real time.
+
+---
+
+## 🏗️ System Architecture
+
+text
+Webcam / Image
+      ↓
+MediaPipe Hand Detector
+      ↓
+21 Hand Landmarks (63 Features)
+      ↓
+Feature Normalization
+      ↓
+GestureNet (MLP Classifier)
+      ↓
+Gesture Prediction
+      ↓
+Streamlit User Interface
+
+
+---
+
+## 📊 Dataset
+
+* Custom dataset collected using webcam input
+* Total Samples: *1,007*
+* Number of Gesture Classes: *14*
+* Data stored as normalized hand landmark coordinates for efficient training
+
+---
+
+## 📈 Model Performance
+
+| Metric              | Value                             |
+| ------------------- | --------------------------------- |
+| Validation Accuracy | *98%*                           |
+| Runtime             | CPU                               |
+| Input Features      | 63 (21 landmarks × 3 coordinates) |
+| Inference           | Real-Time                         |
+
+---
+
+## 🛠️ Tech Stack
+
+* Python
+* PyTorch
+* MediaPipe
+* OpenCV
+* Streamlit
+* NumPy
+
+---
+
+## 📂 Project Structure
+
+text
+SignLang-AI/
+├── app.py
+├── collect_data.py
+├── train.py
+├── train_gesture_model.py
+├── colab_train.py
+├── gesture_model.pth
+├── gesture_data.json
+├── hand_landmarker.task
+├── requirements.txt
+├── setup_and_run.bat
+└── README.md
+
+
+---
+
+## ⚙️ Installation
+
+bash
+git clone https://github.com/ashish-4169/SignLang-AI.git
+cd SignLang-AI
 pip install -r requirements.txt
 
-# 3. Run
+
+---
+
+## ▶️ Run the Application
+
+bash
 streamlit run app.py
-```
+
+
+Open the local Streamlit URL displayed in the terminal to start real-time gesture recognition.
 
 ---
 
-## 🧠 Train Your Own Model
+## 🧪 Training the Model
 
-```bash
-# Step 1: Collect landmark data via webcam
-python train_gesture_model.py --collect
+### Step 1: Collect Gesture Samples
 
-# Step 2: Train the neural network
-python train_gesture_model.py --train
+bash
+python collect_data.py
 
-# Step 3: Evaluate
-python train_gesture_model.py --eval
-```
 
----
+### Step 2: Train the Classifier
 
-## 📁 Project Structure
+bash
+python train.py
 
-```
-signlang-ai/
-├── app.py                      # Streamlit app (webcam + upload)
-├── train_gesture_model.py      # MLP training on landmark data
-├── requirements.txt
-├── models/
-│   └── gesture_model.pth       # Trained weights
-├── data/
-│   └── gestures.json           # Collected landmark dataset
-├── static/
-│   └── training_curves.png
-└── README.md
-```
 
 ---
 
-## 📊 Performance
+## 💼 Resume Highlights
 
-| Metric | Value |
-|---|---|
-| Common Gestures Accuracy | ~92% |
-| ASL Letter Accuracy | ~85% |
-| Inference Speed | 30fps (CPU) |
-| Latency | <15ms per frame |
+* Collected and curated a custom dataset of *1,007 hand gesture samples spanning 14 gesture classes*.
+* Designed and trained a *GestureNet Multi-Layer Perceptron (MLP)* using normalized 3D hand landmark features extracted from MediaPipe.
+* Achieved *98% validation accuracy* on unseen gesture samples.
+* Developed an interactive *Streamlit application* enabling real-time gesture recognition through webcam input.
 
 ---
 
-## 🖐️ Supported Signs
+## 📸 Demo
 
-**Common Gestures:** 👋 Hello · 👍 Thumbs Up · ✌️ Peace · 🤟 ILY · 🤘 Rock On · 🤙 Call Me · 👊 Fist · ☝️ Pointing
+Add screenshots or GIFs of:
 
-**ASL Letters:** A B C D E F G H I K L M N · and more
-
----
-
-## 📝 Resume Line
-
-```
-SignLang AI | OpenCV · MediaPipe · PyTorch · Streamlit
-• Built real-time ASL recognition at 30fps using MediaPipe's 21-point hand tracking
-• Engineered geometric features from joint angles and fingertip distances 
-  achieving 92% accuracy on common gestures
-• Developed interactive web app with webcam feed, video analysis, and 
-  a sentence-building interface for assistive communication
-• Trained lightweight GestureNet MLP on self-collected landmark dataset; 
-  entire pipeline runs offline on CPU with <15ms latency
-```
+* Live gesture prediction
+* Hand landmark visualization
+* Streamlit application interface
 
 ---
 
 ## ⚠️ Disclaimer
 
-Academic project. Not a certified accessibility device.
+This project was developed for educational and research purposes and is not intended to serve as a certified assistive communication device.
 
 ---
 
-**Author:** Your Name | B.Tech [Branch] | [College]
+## 👨‍💻 Author
+
+*Rajanya Ganguli*
+B.Tech, Computer Science and Engineering
+Indian Institute of Information Technology, Agartala
+
+GitHub: https://github.com/ashish-4169
